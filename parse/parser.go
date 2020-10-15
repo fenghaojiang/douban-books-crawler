@@ -109,6 +109,6 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 
 		books = append(books, book)
 	})
-	
+
 	return books
 }
