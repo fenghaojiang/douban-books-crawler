@@ -49,7 +49,7 @@ func GetDoc(url string) *goquery.Document {
 }
 
 // 分析分页
-func ParsePage(doc *goquery.Document) (pages []Page) {
+func ParsePages(doc *goquery.Document) (pages []Page) {
 	pages = append(pages, Page{Page: 1, Url: ""})
 	doc.Find("#content > div > div.article > div.paginator > a").Each(func(i int, selection *goquery.Selection) {
 		page, _ := strconv.Atoi(selection.Text())
@@ -66,7 +66,7 @@ func ParsePage(doc *goquery.Document) (pages []Page) {
 
 func GetPages(url string) []Page {
 	doc := GetDoc(url)
-	return ParsePage(doc)
+	return ParsePages(doc)
 }
 
 func ParseBook(doc *goquery.Document) (books []DoubanBook) {
