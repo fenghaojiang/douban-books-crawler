@@ -1,6 +1,7 @@
 package parse
 
 import (
+	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
@@ -46,6 +47,9 @@ func GetDoc(url string) *goquery.Document {
 	defer rsp.Body.Close()
 
 	doc, err := goquery.NewDocumentFromReader(rsp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 	return doc
 }
 
@@ -71,11 +75,12 @@ func GetPages(url string) []Page {
 }
 
 func ParseBook(doc *goquery.Document) (books []DoubanBook) {
-	doc.Find("#content > div > div.indent > table > tbody > tr > td").Each(func(i int, selection *goquery.Selection) {
+	doc.Find("#content > div > div.article > div.indent > table > tbody > tr > td").Each(func(i int, selection *goquery.Selection) {
 		title := strings.TrimSpace(selection.Find("td a").Text())
 
 		info := selection.Find("td .pl").Text()
 		bookInfo := strings.Split(info, "/")
+		fmt.Println(bookInfo)
 		author := strings.TrimRight(bookInfo[0], "著")
 		author = strings.TrimSpace(author)
 		var translator, press, date, price string
@@ -83,7 +88,7 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 			press = strings.TrimSpace(bookInfo[1])
 			date = strings.TrimSpace(bookInfo[2])
 			price = strings.TrimSpace(bookInfo[3])
-		} else {
+		} else if len(bookInfo) == 5 {
 			translator = strings.TrimSpace(bookInfo[1])
 			press = strings.TrimSpace(bookInfo[2])
 			date = strings.TrimSpace(bookInfo[3])
