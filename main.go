@@ -23,7 +23,7 @@ func startCrawler() {
 
 	pages := parse.GetPages(baseUrl)
 	for _, page := range pages {
-		doc := parse.GetDoc(baseUrl + page.Url)
+		doc := parse.GetDoc(page.Url)
 		books = append(books, parse.ParseBook(doc)...)
 	}
 

@@ -35,7 +35,6 @@ func GetDoc(url string) *goquery.Document {
 	}
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36")
 	rsp, err := client.Do(req)
-	defer rsp.Body.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -43,6 +42,7 @@ func GetDoc(url string) *goquery.Document {
 	if rsp.StatusCode != 200 {
 		log.Fatalf("%s", rsp.Status)
 	}
+	defer rsp.Body.Close()
 
 	doc, err := goquery.NewDocumentFromReader(rsp.Body)
 	return doc
