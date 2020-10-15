@@ -76,7 +76,7 @@ func GetPages(url string) []Page {
 
 func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 	doc.Find("#content > div > div.article > div.indent > table > tbody > tr > td").Each(func(i int, selection *goquery.Selection) {
-		title := strings.TrimSpace(selection.Find("td a").Text())
+		title := strings.TrimSpace(selection.Find("td .p12").Text())
 
 		info := selection.Find("td .pl").Text()
 		bookInfo := strings.Split(info, "/")
@@ -96,7 +96,9 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 		}
 
 		star := selection.Find("td div span").Eq(1).Text()
-		comment := selection.Find("td div span").Eq(2).Text()
+		comment := strings.TrimSpace(selection.Find("td div span").Eq(2).Text())
+		comment = strings.TrimLeft(comment, "(")
+		comment = strings.TrimRight(comment, ")")
 		compile := regexp.MustCompile("[0-9]")
 		comment = strings.Join(compile.FindAllString(comment, -1), "")
 

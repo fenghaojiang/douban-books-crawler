@@ -5,7 +5,7 @@ CREATE TABLE `douban_book` (
   `translator` varchar(50) DEFAULT '' COMMENT '译者',
   `press` varchar(50) DEFAULT '' COMMENT '出版社',
   `date` varchar(20) DEFAULT '' COMMENT '日期',
-  `price` varchar(20) DEFAULT '' COMMENT '定价',
+  `price` varchar(50) DEFAULT '' COMMENT '定价',
   `star` int(10) unsigned DEFAULT '0' COMMENT '星级',
   `comment` int(10) unsigned DEFAULT '0' COMMENT '评分',
   `quote` varchar(999) DEFAULT '' COMMENT '引用',
