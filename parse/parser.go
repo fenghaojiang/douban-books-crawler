@@ -26,7 +26,7 @@ type Page struct {
 	Url  string
 }
 
-//伪造请求头
+//伪造请求头获取文档
 func GetDoc(url string) *goquery.Document {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
