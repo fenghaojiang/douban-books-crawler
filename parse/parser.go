@@ -26,15 +26,16 @@ type Page struct {
 	Url  string
 }
 
+const BaseUrl = "https://book.douban.com/top250"
+
 //伪造请求头获取文档
 func GetDoc(url string) *goquery.Document {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36")
 	rsp, err := client.Do(req)
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -50,8 +51,8 @@ func GetDoc(url string) *goquery.Document {
 
 // 分析分页
 func ParsePages(doc *goquery.Document) (pages []Page) {
-	pages = append(pages, Page{Page: 1, Url: ""})
-	doc.Find("#content > div > div.article > div.paginator > a").Each(func(i int, selection *goquery.Selection) {
+	pages = append(pages, Page{Page: 1, Url: BaseUrl})
+	doc.Find(".paginator > a").Each(func(i int, selection *goquery.Selection) {
 		page, _ := strconv.Atoi(selection.Text())
 		url, _ := selection.Attr("href")
 

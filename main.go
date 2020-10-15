@@ -6,9 +6,6 @@ import (
 	"log"
 )
 
-var (
-	baseUrl = "https://book.douban.com/top250"
-)
 
 func add(books []parse.DoubanBook) {
 	for i, book := range books {
@@ -21,7 +18,7 @@ func add(books []parse.DoubanBook) {
 func startCrawler() {
 	var books []parse.DoubanBook
 
-	pages := parse.GetPages(baseUrl)
+	pages := parse.GetPages(parse.BaseUrl)
 	for _, page := range pages {
 		doc := parse.GetDoc(page.Url)
 		books = append(books, parse.ParseBook(doc)...)
