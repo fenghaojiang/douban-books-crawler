@@ -4,6 +4,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -71,20 +72,43 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 		info := selection.Find("td .pl").Text()
 		bookInfo := strings.Split(info, "/")
 		author := strings.TrimRight(bookInfo[0], "著")
+		author = strings.TrimSpace(author)
+		var translator, press, date, price string
+		var press string
 		if len(bookInfo) == 4 {
-			press := bookInfo[1]
-			date := bookInfo[2]
-			price := bookInfo[3]
+			press = strings.TrimSpace(bookInfo[1])
+			date = strings.TrimSpace(bookInfo[2])
+			price = strings.TrimSpace(bookInfo[3])
 		} else {
-			translator := bookInfo[1]
-			press := bookInfo[2]
-			date := bookInfo[3]
-			price := bookInfo[4]
+			translator = strings.TrimSpace(bookInfo[1])
+			press = strings.TrimSpace(bookInfo[2])
+			date = strings.TrimSpace(bookInfo[3])
+			price = strings.TrimSpace(bookInfo[4])
 		}
 
 		star := selection.Find("td div span").Eq(1).Text()
 		comment := selection.Find("td div span").Eq(2).Text()
+		compile := regexp.MustCompile("[0-9]")
+		comment = strings.Join(compile.FindAllString(comment, -1), "")
 
-		quote := selection.Find("td .quote span").Text()
+		quote := selection.Find("td .quote .inq").Text()
+
+		book := DoubanBook{
+			Title:      title,
+			Author:     author,
+			Translator: translator,
+			Press:      press,
+			Date:       date,
+			Price:      price,
+			Star:       star,
+			Comment:    comment,
+			Quote:      quote,
+		}
+
+		log.Printf("i: %d, book: %v\n", i, book)
+
+		books = append(books, book)
 	})
+	
+	return books
 }
