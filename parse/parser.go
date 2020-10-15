@@ -34,7 +34,6 @@ func GetDoc(url string) *goquery.Document {
 		log.Fatal(err)
 	}
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36")
-
 	rsp, err := client.Do(req)
 	defer rsp.Body.Close()
 	if err != nil {
@@ -52,9 +51,9 @@ func GetDoc(url string) *goquery.Document {
 // 分析分页
 func ParsePage(doc *goquery.Document) (pages []Page) {
 	pages = append(pages, Page{Page: 1, Url: ""})
-	doc.Find(".paginator > a").Each(func(i int, s *goquery.Selection) {
-		page, _ := strconv.Atoi(s.Text())
-		url, _ := s.Attr("href")
+	doc.Find("#content > div > div.article > div.paginator > a").Each(func(i int, selection *goquery.Selection) {
+		page, _ := strconv.Atoi(selection.Text())
+		url, _ := selection.Attr("href")
 
 		pages = append(pages, Page{
 			Page: page,
@@ -63,6 +62,11 @@ func ParsePage(doc *goquery.Document) (pages []Page) {
 	})
 
 	return pages
+}
+
+func GetPages(url string) []Page {
+	doc := GetDoc(url)
+	return ParsePage(doc)
 }
 
 func ParseBook(doc *goquery.Document) (books []DoubanBook) {
@@ -74,7 +78,6 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 		author := strings.TrimRight(bookInfo[0], "著")
 		author = strings.TrimSpace(author)
 		var translator, press, date, price string
-		var press string
 		if len(bookInfo) == 4 {
 			press = strings.TrimSpace(bookInfo[1])
 			date = strings.TrimSpace(bookInfo[2])
