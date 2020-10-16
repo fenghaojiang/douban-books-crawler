@@ -19,5 +19,7 @@ golang crawler demo
 $ go run main.go
 ```
 
-# TODO List
-用前端写一个统计分析书籍数据的工具
+# FrontEnd Analysis Tool
+//TODO
+用前端写一个统计分析书籍数据的小工具  
+
