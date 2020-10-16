@@ -96,9 +96,9 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 			date = strings.TrimSpace(bookInfo[3])
 			price = strings.TrimSpace(bookInfo[4])
 		}
-		
+
 		star := selection.Find("td div .rating_nums").Text()
-		comment := strings.TrimSpace(selection.Find("td div .pl").Eq(1).Text())
+		comment := strings.TrimSpace(selection.Find("td .pl").Eq(1).Text())
 		comment = strings.TrimLeft(comment, "(")
 		comment = strings.TrimRight(comment, ")")
 		compile := regexp.MustCompile("[0-9]")
