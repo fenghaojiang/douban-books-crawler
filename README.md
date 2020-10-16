@@ -6,7 +6,14 @@ golang crawler demo
 
 以后的人生中要好好读书
 
-# Run
+
+
+# Run  
+运行前要在Mysql中建表，文件在
+```go
+/config/book.sql
+```
+
 ```shell
 $ go run main.go
 ```
