@@ -13,6 +13,7 @@ golang crawler demo
 ```go
 /config/book.sql
 ```
+建表后执行
 
 ```shell
 $ go run main.go
