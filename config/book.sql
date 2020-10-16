@@ -1,6 +1,6 @@
 CREATE TABLE `douban_book` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(20) DEFAULT '' COMMENT '标题',
+  `title` varchar(100) DEFAULT '' COMMENT '标题',
   `author` varchar(50) DEFAULT '' COMMENT '作者',
   `translator` varchar(50) DEFAULT '' COMMENT '译者',
   `press` varchar(50) DEFAULT '' COMMENT '出版社',

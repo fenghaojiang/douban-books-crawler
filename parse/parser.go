@@ -76,9 +76,11 @@ func GetPages(url string) []Page {
 
 func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 	doc.Find("#content > div > div.article > div.indent > table > tbody > tr").Each(func(i int, selection *goquery.Selection) {
-		title := strings.TrimSpace(selection.Find("td .p12 > a").Text())
+		title := strings.TrimSpace(selection.Find("td div a").Text())
+		title = strings.TrimSpace(title)
 
-		info := selection.Find("td .pl").Text()
+		info := selection.Find("td .pl").Eq(0).Text()
+
 		bookInfo := strings.Split(info, "/")
 		fmt.Println(bookInfo)
 		author := strings.TrimRight(bookInfo[0], "著")
@@ -88,7 +90,6 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 			press = strings.TrimSpace(bookInfo[1])
 			date = strings.TrimSpace(bookInfo[2])
 			price = strings.TrimSpace(bookInfo[3])
-
 		} else if len(bookInfo) == 5 {
 			translator = strings.TrimSpace(bookInfo[1])
 			press = strings.TrimSpace(bookInfo[2])
@@ -96,11 +97,12 @@ func ParseBook(doc *goquery.Document) (books []DoubanBook) {
 			price = strings.TrimSpace(bookInfo[4])
 		}
 
-		//index := strings.Index(price, "(")
-		//price = price[0 : index]
+		//if index := strings.Index(price, "("); index > 0 && index < len(price) {
+		//	price = price[0:index]
+		//}
 
-		star := selection.Find("td div span").Eq(1).Text()
-		comment := strings.TrimSpace(selection.Find("td div span").Eq(2).Text())
+		star := selection.Find("td div .rating_nums").Text()
+		comment := strings.TrimSpace(selection.Find("td div .pl").Eq(1).Text())
 		comment = strings.TrimLeft(comment, "(")
 		comment = strings.TrimRight(comment, ")")
 		compile := regexp.MustCompile("[0-9]")
