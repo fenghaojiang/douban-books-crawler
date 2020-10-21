@@ -21,5 +21,7 @@ $ go run main.go
 
 # FrontEnd Analysis Tool
 
-用前端写一个统计分析书籍数据的小工具  
-[vue-book-tool](https://github.com/fenghaojiang/vue-books-tool)
+用前端写一个统计分析书籍数据的小工具
+[vue-book-tool](https://github.com/fenghaojiang/vue-books-tool)  
+后端用的gin实现,爬取豆瓣Top250书籍信息到mysql就可以跑起来  
+
