@@ -1,4 +1,6 @@
-# douban-books-crawler
+# douban-books-crawler  
+[![Build Status](https://travis-ci.com/travis-ci/travis-web.svg?branch=master)](https://travis-ci.com/travis-ci/travis-web)  
+
 golang crawler demo
 
 # Description
