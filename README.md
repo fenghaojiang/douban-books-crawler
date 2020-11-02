@@ -1,7 +1,7 @@
 # douban-books-crawler  
 [![Build Status](https://travis-ci.com/travis-ci/travis-web.svg?branch=master)](https://travis-ci.com/travis-ci/travis-web)  
 
-golang crawler demo
+a simple golang crawler demo using gin+gorm
 
 # Description
 学习golang过程中写的一个很简单的爬虫,爬取豆瓣图书top250  
